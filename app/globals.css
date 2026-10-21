@@ -1,0 +1,584 @@
+@import 'tailwindcss';
+
+/* Kezia Craft design tokens, inherited verbatim from the uploaded template
+   (fancy-master/scss/_variables.scss and css/style.css). Do not change values. */
+@theme {
+  --color-primary: #2bc0a4;
+  --color-brand: #744fff;
+  --color-leaf: #21d397;
+  --color-leaf-bright: #20d497;
+  --color-ink: #232d37;
+  --color-night: #131627;
+  --color-night-soft: #2b2e3d;
+  --color-plum: #1e1e27;
+  --color-body: #51545f;
+  --color-muted: #b5aec4;
+  --color-ash: #7f7f7f;
+  --color-mist: #f7f7f7;
+  --color-line: #e5e5e5;
+  --color-shell: #ebebeb;
+  --color-smoke: #eeeef0;
+  --color-alert: #f43535;
+  --color-honey: #f0c605;
+  --color-terracotta: #8f6247;
+  --color-slate-soft: #626571;
+
+  --font-sans: 'Poppins', sans-serif;
+  --font-display: 'Playfair Display', serif;
+
+  --shadow-card: 0px 25px 49px 0px rgba(58, 74, 88, 0.1);
+  --shadow-float: 0px 27px 51.33px 7.67px rgba(0, 0, 0, 0.15);
+  --shadow-lift: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+
+  --radius-brand: 3px;
+
+  --animate-thread: thread 2.4s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-marquee-hint: marquee-hint 3.2s ease-in-out 1;
+}
+
+/* Fonts
+   The template loads Poppins and Playfair Display from Google Fonts
+   (scss/_variables.scss) and ships the FontAwesome, ElegantIcons and Themify
+   icon faces locally. next/font serves the two text families from here so the
+   exact same stacks are used everywhere. */
+:root {
+  --kc-gradient-duo: linear-gradient(180deg, #20d497 0%, #744fff 100%);
+  --kc-gradient-sweep: linear-gradient(to right, #744fff 0%, #21d397 51%, #744fff 100%);
+  --font-pop: var(--font-sans);
+  --font-play: var(--font-display);
+  --kc-gutter: 1rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  [id] {
+    scroll-margin-top: 92px;
+  }
+
+  body {
+    font-family: var(--font-pop);
+    color: var(--color-body);
+    background-color: #ffffff;
+    font-size: 14px;
+    line-height: 26px;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-ink);
+    font-family: var(--font-pop);
+    font-weight: 500;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  /* Inputs stay at 16px or above so iOS never zooms on focus. */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+    font-family: var(--font-pop);
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-primary);
+  }
+}
+
+@layer components {
+  /* Template container: 1200px max at desktop (scss/_predefin.scss). */
+  .container-kc {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: var(--kc-gutter);
+  }
+
+  @media (min-width: 640px) {
+    .container-kc {
+      --kc-gutter: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-kc {
+      --kc-gutter: 2rem;
+    }
+  }
+
+  .section-kc {
+    padding-block: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-kc {
+      padding-block: 5rem;
+    }
+  }
+
+  /* Section headings, ported from .main_title / .center_title / .b_center_title. */
+  /* Sizes come from the responsive utility scale in each page; the wrapper
+     keeps the template's weight, colour and lede spacing. */
+  .main_title h1,
+  .main_title h2 {
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  .main_title p {
+    color: var(--color-body);
+    line-height: 26px;
+    padding-top: 15px;
+  }
+
+  .center_title {
+    color: #fff;
+    text-align: center;
+    padding-bottom: 40px;
+  }
+
+  .center_title h2 {
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .center_title p {
+    font-size: 1rem;
+    line-height: 26px;
+    padding-top: 10px;
+    color: #fff;
+  }
+
+  .b_center_title {
+    text-align: center;
+    padding-bottom: 50px;
+  }
+
+  .b_center_title h2 {
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  .b_center_title p {
+    font-size: 1rem;
+    line-height: 26px;
+    padding-top: 10px;
+    color: var(--color-body);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  /* Solid gradient button, from .bg_btn / .submit_btn (46px tall, 3px radius). */
+  .bg_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 1.75rem;
+    border: none;
+    border-radius: 3px;
+    background-image: var(--kc-gradient-sweep);
+    background-size: 200% auto;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 400ms ease-out;
+  }
+
+  .bg_btn:hover {
+    background-position: right center;
+    color: #fff;
+  }
+
+  .bg_btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Outline button, from .tp_btn (gradient 2px border, 46px tall). */
+  .tp_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 1.75rem;
+    position: relative;
+    z-index: 3;
+    background: #fff;
+    color: var(--color-ink);
+    border: 2px solid transparent;
+    border-image: var(--kc-gradient-duo) 1;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 400ms ease-out;
+  }
+
+  .tp_btn:hover {
+    color: var(--color-ink);
+    background: var(--color-mist);
+  }
+
+  /* Inset gradient border button, from .read_btn. */
+  .read_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 1.5rem;
+    color: var(--color-ink);
+    background-image: var(--kc-gradient-sweep);
+    background-size: 200% auto;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 400ms ease-out;
+  }
+
+  .read_btn::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--color-mist);
+    z-index: -1;
+  }
+
+  .read_btn:hover {
+    background-position: right center;
+    color: var(--color-ink);
+  }
+
+  .more_btn {
+    color: var(--color-primary);
+    font-size: 14px;
+    line-height: 26px;
+    text-decoration: underline;
+    transition: all 400ms linear;
+  }
+
+  .more_btn:hover {
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .submit_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 1.5rem;
+    border: none;
+    border-radius: 3px;
+    background-image: var(--kc-gradient-sweep);
+    background-size: 200% auto;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 400ms ease-out;
+  }
+
+  .submit_btn:hover {
+    background-position: right center;
+    color: #fff;
+  }
+
+  .submit_btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Utility field styles shared by every form. */
+  .field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink);
+    padding-bottom: 8px;
+  }
+
+  .field-input {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: var(--color-ink);
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+    transition: all 300ms linear;
+  }
+
+  .field-input::placeholder {
+    color: var(--color-ash);
+    font-size: 14px;
+  }
+
+  .field-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(43, 192, 164, 0.15);
+    outline: none;
+  }
+
+  .field-error {
+    color: var(--color-alert);
+    font-size: 12px;
+    padding-top: 6px;
+  }
+
+  .card-kc {
+    background: #fff;
+    box-shadow: var(--shadow-card);
+    border-radius: 3px;
+    transition: all 400ms ease-out;
+  }
+
+  .card-kc:hover {
+    box-shadow: var(--shadow-float);
+    transform: translateY(-4px);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    color: var(--color-ink);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 300ms ease-out;
+  }
+
+  .chip:hover,
+  .chip[data-active='true'] {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .link-underline {
+    color: var(--color-ink);
+    font-size: 14px;
+    transition: all 300ms linear;
+  }
+
+  .link-underline:hover {
+    color: var(--color-primary);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background-image: var(--kc-gradient-sweep);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-duo {
+    background-image: var(--kc-gradient-duo);
+  }
+
+  .bg-sweep {
+    background-image: var(--kc-gradient-sweep);
+    background-size: 200% auto;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 3px;
+    background: var(--color-mist);
+  }
+
+  .card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* iOS safe area helpers */
+  .pb-safe {
+    padding-bottom: 1rem;
+  }
+
+  .bottom-safe {
+    bottom: 1.5rem;
+  }
+
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .pb-safe {
+      padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    }
+    .bottom-safe {
+      bottom: calc(1.5rem + env(safe-area-inset-bottom));
+    }
+  }
+
+  /* Kezia Craft: floating controls keep 24px from the edges, respect the iOS
+     safe area and lift above the cookie banner while it is open. */
+  .bottom-safe {
+    bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px) + var(--kc-consent-offset, 0px));
+    transition: bottom 300ms ease-out;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms ease-out,
+      transform 700ms ease-out;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes thread {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: left;
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+    opacity: 0.4;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+@keyframes marquee-hint {
+  0% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-28px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes loom-thread {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes count-bump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
