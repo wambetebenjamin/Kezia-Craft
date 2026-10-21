@@ -11,6 +11,13 @@ export function LoadingScreen() {
   const [reduced, setReduced] = useState(false)
 
   useEffect(() => {
+    // Show the loom once per browser session, then let navigation feel instant.
+    if (window.sessionStorage.getItem('kezia-craft-intro') === 'seen') {
+      setHidden(true)
+      return
+    }
+    window.sessionStorage.setItem('kezia-craft-intro', 'seen')
+
     setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
 
     const skipTimer = window.setTimeout(() => setShowSkip(true), 3000)
